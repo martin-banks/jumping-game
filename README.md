@@ -4,6 +4,7 @@ Create a simple scrolling platform game (like the chrome dinosaur game).
 ### Requirements:
 
 	Infinite scrolling
+		Stop, start and pause controls
 	Points counter
 	Collision detection - from obstacles and enemies
 	Increasing speed
