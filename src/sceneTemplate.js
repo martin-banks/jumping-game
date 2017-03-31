@@ -1,14 +1,17 @@
 
 class SceneTemplate {
-	constructor({}={}) {
+	constructor(updateObstaclePosition) {
 		this.template = this.template.bind(this)
 		this.playScene = this.playScene.bind(this)
 		this.loadScene = this.loadScene.bind(this)
 		this.toggleStatus = this.toggleStatus.bind(this)
+		this.updateObstacleCount = this.updateObstacleCount.bind(this)
+		this.updateObstaclePosition = updateObstaclePosition
 
 		this.state = {
 			playing: false,
-			gameSpeed: 3 * 1000
+			gameSpeed: 3 * 1000,
+			obstacleCount: 0
 		}
 	}
 
@@ -34,6 +37,10 @@ class SceneTemplate {
 		return ''
 	}
 
+	updateObstacleCount(){
+		this.state.obstacleCount++
+	}
+
 
 	playScene({id, startPos=100}={}){
 		/* animate through to complete */
@@ -43,7 +50,7 @@ class SceneTemplate {
 		let start = startPos
 		let {gameSpeed} = this.state
 		let duration = gameSpeed
-		function step(timestamp) {
+		const step = (timestamp) => {
 			if (!animStart) animStart = timestamp
 			let progress = timestamp - animStart
 			let increment = ()=> {
@@ -75,15 +82,18 @@ class SceneTemplate {
 				start = 100
 				duration = gameSpeed
 				const obstacleSizes = [
-				'small', 'medium', 'large'
+					'small', 'medium', 'large'
 				]
 				const obstacles = ()=>{
+					
 					let tmp = []
 					for(let i=0; i< Math.ceil(Math.random()*2)+1; i++){
+						this.updateObstacleCount()
+						let xpos = 400/100 * (Math.ceil( (Math.random()*100 )+1))
 						tmp.push(`
-							<div 
+							<div id="obs-${this.state.obstacleCount}"
 								class="obstacle ${obstacleSizes[Math.ceil(Math.random()*obstacleSizes.length)-1]}"
-								style="transform: translate3d(${ 400/100 * (Math.ceil( (Math.random()*100 )+1)) }px, 0, 0)"
+								style="transform: translate3d(${xpos}px, 0, 0)"
 							></div>`
 						)
 					}
