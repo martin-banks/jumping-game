@@ -16,7 +16,7 @@ const game = {
 			x2: 0,
 			y2: 0
 		}
-	}
+	},
 	obstacles: [
 		{
 			x1: 0,

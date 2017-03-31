@@ -1,12 +1,13 @@
 
 class SceneTemplate {
-	constructor(updateObstaclePosition) {
+	constructor({updateObstaclePosition=null, count=0} = {}) {
 		this.template = this.template.bind(this)
 		this.playScene = this.playScene.bind(this)
 		this.loadScene = this.loadScene.bind(this)
 		this.toggleStatus = this.toggleStatus.bind(this)
 		this.updateObstacleCount = this.updateObstacleCount.bind(this)
 		this.updateObstaclePosition = updateObstaclePosition
+		this.count = count
 
 		this.state = {
 			playing: false,
@@ -61,17 +62,12 @@ class SceneTemplate {
 				} else if ( start === 0 ){
 					duration = gameSpeed / 2
 					return inc
-				}
-				
+				}	
 			}
-			//console.log(increment())
-			
-			/* do animation */
 
 			elem.style.transform = `translate3d(${start - (increment())}%, 0, 0)`
 			if(progress < duration && isPlaying()){
 				window.requestAnimationFrame(step)
-
 			} else if (!isPlaying()){
 				console.log('stopped')
 				return
@@ -81,27 +77,14 @@ class SceneTemplate {
 				animStart = null
 				start = 100
 				duration = gameSpeed
-				const obstacleSizes = [
-					'small', 'medium', 'large'
-				]
-				const obstacles = ()=>{
-					
-					let tmp = []
-					for(let i=0; i< Math.ceil(Math.random()*2)+1; i++){
-						this.updateObstacleCount()
-						let xpos = 400/100 * (Math.ceil( (Math.random()*100 )+1))
-						tmp.push(`
-							<div id="obs-${this.state.obstacleCount}"
-								class="obstacle ${obstacleSizes[Math.ceil(Math.random()*obstacleSizes.length)-1]}"
-								style="transform: translate3d(${xpos}px, 0, 0)"
-							></div>`
-						)
-					}
-					return tmp.join('')
+
+				let tmp = []
+				for(let i=0; i< Math.ceil(Math.random()*2)+1; i++){
+					let newObstacle = new Obstacle(this.updateObstacleCount)
+					let xpos = 400/100 * (Math.ceil( (Math.random()*100 )+1))
+					tmp.push( newObstacle.template({count: this.count}) )
 				}
-				elem.innerHTML = obstacles()
-				// comment out animation call to prevent infinite 
-				// recursion until start/stop is in place
+				elem.innerHTML = tmp.join('')
 				window.requestAnimationFrame(step)
 			}
 		}	
