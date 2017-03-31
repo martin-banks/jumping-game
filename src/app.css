@@ -15,6 +15,7 @@ body {
 	right: 0;
 	border: solid 1px #888;
 	margin: 0 auto;
+	overflow: hidden;
 }
 
 .scene {
@@ -33,7 +34,7 @@ body {
 
 .scene-loading {
 	transform: translate3d(100%, 0, 0);
-	border: solid 2px gold;
+	//border: solid 2px gold;
 }
 
 .scene-playing {

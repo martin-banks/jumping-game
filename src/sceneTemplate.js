@@ -1,4 +1,4 @@
-console.log('blah')
+
 class SceneTemplate {
 	constructor({}={}) {
 		this.template = this.template.bind(this)

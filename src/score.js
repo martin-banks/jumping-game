@@ -19,7 +19,6 @@ class Score {
 				clearInterval(counter)
 			}
 		}, 100)
-		console.log(this.state.score)
 	}
 
 	stop(){
