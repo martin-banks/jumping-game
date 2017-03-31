@@ -83,7 +83,7 @@ class SceneTemplate {
 						tmp.push(`
 							<div 
 								class="obstacle ${obstacleSizes[Math.ceil(Math.random()*obstacleSizes.length)-1]}"
-								style="transform: translate3d(${ 500/100 * (Math.ceil( (Math.random()*100 )+1)) }px, 0, 0)"
+								style="transform: translate3d(${ 400/100 * (Math.ceil( (Math.random()*100 )+1)) }px, 0, 0)"
 							></div>`
 						)
 					}
