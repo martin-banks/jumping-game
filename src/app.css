@@ -6,10 +6,13 @@ body {
 	box-sizing: border-box;
 }
 
-#gameContainer {
-	position: relative;
+#gameContainer,
+.playerContainer {
+	position: absolute;
 	width: 500px;
 	height: 300px;
+	left: 0;
+	right: 0;
 	border: solid 1px #888;
 	margin: 0 auto;
 }
@@ -85,4 +88,15 @@ button {
 	font-size: 20px;
 	text-align: right;
 	margin-bottom: 20px;
+}
+
+#player {
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	background-color: darkred;
+	position: absolute;
+	left: 50px;
+	bottom: 0;
+
 }

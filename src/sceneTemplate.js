@@ -8,7 +8,7 @@ class SceneTemplate {
 
 		this.state = {
 			playing: false,
-			gameSpeed: 10 * 1000
+			gameSpeed: 3 * 1000
 		}
 	}
 
