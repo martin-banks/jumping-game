@@ -97,7 +97,7 @@ button {
 	border-radius: 100%;
 	background-color: darkred;
 	position: absolute;
-	left: 50px;
-	bottom: 0;
+	left: 0;
+	top`: 0;
 
 }

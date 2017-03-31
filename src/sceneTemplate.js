@@ -31,7 +31,7 @@ class SceneTemplate {
 
 	loadScene(){
 		/* render random obstacles */
-		return 'hello world'
+		return ''
 	}
 
 

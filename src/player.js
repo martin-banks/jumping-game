@@ -1,9 +1,11 @@
 
 class Player {
-	constructor(){
+	constructor(updatePlayerPosition){
 		this.render = this.render.bind(this)
 		this.jump = this.jump.bind(this)
 		this.setJumping = this.setJumping.bind(this)
+		this.startPosition = this.startPosition.bind(this)
+		this.updatePlayerPosition = updatePlayerPosition
 		this.state = {
 			direction: 'up',
 			height: 200,
@@ -19,6 +21,7 @@ class Player {
 	jump(){
 		if(!this.state.jumping){
 			this.setJumping(true)
+			let {x,y} = this.startPosition()
 			let animStart = null
 			let elem = document.querySelector('#player')
 			let {height, time, direction} = this.state
@@ -31,12 +34,19 @@ class Player {
 				let progress = timestamp - animStart
 				let increment = null
 				if(direction === 'up'){
-					increment = start + (0-Math.min((progress/duration)*target, target))
+					increment = y + (0-Math.min((progress/duration)*target, target))
 				} else {
-					increment = 0-Math.max(((1-progress/duration)*height), target)
+					increment = y - Math.max(((1-progress/duration)*height), target)
 				}
 
-				elem.style.transform = `translate3d(0, ${increment}px, 0)`
+				elem.style.transform = `translate3d(${x}px, ${increment}px, 0)`
+				console.log('increment', increment + 40)
+				updatePlayerPosition({
+					x1: `${x}`,
+					x2: `${x + 40}`,
+					y1: `${increment}`,
+					y2: `${ increment + 40}`
+				})
 
 				if(progress < duration){
 					window.requestAnimationFrame(step)
@@ -59,12 +69,19 @@ class Player {
 		} else {
 			console.log('already jumping')
 			return
+		}	
+	}
+
+	startPosition(){
+		return {
+			x: 50,
+			y: 260
 		}
-		
 	}
 
 
 	render(){
-		return `<div id="player"></div>`
+		let {x,y} = this.startPosition()
+		return `<div id="player" style="transform: translate3d(${x}px, ${y}px, 0)"></div>`
 	}
 }
