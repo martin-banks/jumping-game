@@ -17,12 +17,28 @@ const game = {
 			y2: 0
 		}
 	}
+	obstacles: [
+		{
+			x1: 0,
+			y1: 0,
+			x2: 0,
+			y2: 0	
+		}
+	]
 
 }
 
 console.log('starting', game)
 
 function updatePlayerPosition({x1=0, x2=0, y1=0, y2=0} = {}) {
+	console.log('waiting to update... ', game.player.position)
+	game.player.position.x1 = x1
+	game.player.position.x2 = x2
+	game.player.position.y1 = y1
+	game.player.position.y2 = y2
+	console.log('updating... ', game.player.position)
+}
+function updateObstaclePosition({x1=0, x2=0, y1=0, y2=0} = {}) {
 	console.log('waiting to update... ', game.player.position)
 	game.player.position.x1 = x1
 	game.player.position.x2 = x2
