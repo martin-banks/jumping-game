@@ -19,13 +19,14 @@ console.log('starting', game)
 const scene1 = new SceneTemplate()
 const scene2 = new SceneTemplate()
 const scene3 = new SceneTemplate()
-
+const score = new Score()
 const scenes = [
 	scene1.render('first'),
 	scene2.render('second')
 ]
 
 document.querySelector('#app').innerHTML = [
+	score.render(),
 	`<div id="gameContainer">${scenes.join('')}</div>`,
 	`<button id='startButton' type="button" class="btn btn-default">New Game</button>`
 ].join('')
@@ -37,18 +38,13 @@ document.getElementById('startButton').addEventListener('click', e =>{
 		/* game is runnning: stop it */
 		game.isActive = false
 		e.target.innerText = 'New Game'
+		score.stop()
 	} else {
 		/* game is not running: start it */
 		game.isActive = true
 		scene1.playScene({startPos: 0, id:'first'})
 		scene2.playScene({startPos: 100, id:'second'})
 		e.target.innerText = 'End game'
+		score.start()
 	}
-	
 })
-
-
-/*setTimeout(()=>{
-	document.querySelector('.scene').classList.add('scene-playing')	
-}, 1)*/
-
