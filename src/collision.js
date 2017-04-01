@@ -9,7 +9,7 @@ class Collision {
 		/* check if hte player is in a collision window */
 		/* this should also work for suare detection */
 		let horizontal = 
-		let vertical
+		let vertical = 
 		if( !!hotizontal ){
 			return !! vertical ? true : false
 		} else {

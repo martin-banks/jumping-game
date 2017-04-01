@@ -11,6 +11,10 @@ const game = {
 		shape: 'circle',
 		name: 'null',
 		avatar: 'default',
+		width: 40,
+		height: 40,
+		radius: 20,
+
 		position: {
 			x1: 0,
 			y1: 0,
@@ -28,14 +32,7 @@ const game = {
 			y: 0
 		}
 	},
-	obstacles: [
-		{
-			x1: 0,
-			y1: 0,
-			x2: 0,
-			y2: 0	
-		}
-	]
+	obstacles: {}
 
 }
 
@@ -43,27 +40,27 @@ console.log('starting', game)
 
 function updatePlayerPosition({x1=0, x2=0, y1=0, y2=0} = {}) {
 	console.log('waiting to update player... ', game.player.position)
-	game.player.position.x1 = x1
-	game.player.position.x2 = x2
+	game.player.position = {
+		x1, x2, y1,y2
+	}
+	/*game.player.position.x2 = x2
 	game.player.position.y1 = y1
-	game.player.position.y2 = y2
-	console.log('updating player... ', game.player.position)
+	game.player.position.y2 = y2*/
+	game.player.centerPoint = {
+		x: parseInt(x1) + game.player.radius,
+		y: parseInt(y1) + game.player.radius
+	}
+	
+	//console.info('centerpoint', game.player.centerPoint)
+	//console.log('updating player... ', game.player.position)
 }
-/*function updateObstaclePosition({x1=0, x2=0, y1=0, y2=0} = {}) {
-	console.log('waiting to update obstacles... ', game.obstacle.position)
-	game.obstacle.position.x1 = x1
-	game.obstacle.position.x2 = x2
-	game.obstacle.position.y1 = y1
-	game.obstacle.position.y2 = y2
-	game.obstacle.shape = triangle
-	console.log('updating obstacles... ', game.obstacle.position)
-}*/
 
 
 
-function saveObstacleData(obstacles){
+function saveObstacleData({obstacles, scene}={}){
 	/* obstacles is an array of objects with details of rendered obstacles */
-	game.obstacles = obstacles.map(obstacle => {
+	console.log('save args', scene, obstacles)
+	game.obstacles[scene] = obstacles.map(obstacle => {
 		console.log('obstacle data', obstacle)
 		let { size, shape='triangle', x, y=0 } = obstacle
 		let { width, height, className } = size
@@ -83,6 +80,7 @@ function saveSceneData({scene=null, x=0, y=0}={}){
 	game.scenePosition[scene].x = x / 100 * 500
 	game.scenePosition[scene].y = y / 100 * 300
 }
+
 
 
 

@@ -103,7 +103,7 @@ class SceneTemplate {
 						size: newObstacle.data()
 					})
 				}
-				this.saveObstacleData(allNewObstacleData)
+				this.saveObstacleData({obstacles:allNewObstacleData, scene:this.id})
 				elem.innerHTML = allNewObstacles.join('')
 				window.requestAnimationFrame(step)
 			}
