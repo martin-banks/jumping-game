@@ -82,6 +82,14 @@ class Player {
 
 	render(){
 		let {x,y} = this.startPosition()
-		return `<div id="player" style="transform: translate3d(${x}px, ${y}px, 0)"></div>`
+		this.updatePlayerPosition({
+			x1: `${x}`,
+			x2: `${x + 40}`,
+			y1: `${y}`,
+			y2: `${y + 40}`
+		})
+		return `<div id="player" 
+			style="transform: translate3d(${x}px, ${y}px, 0)"
+		></div>`
 	}
 }

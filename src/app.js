@@ -14,13 +14,7 @@ const game = {
 		width: 40,
 		height: 40,
 		radius: 20,
-
-		position: {
-			x1: 0,
-			y1: 0,
-			x2: 0,
-			y2: 0
-		}
+		position: {}
 	},
 	scenePosition:{
 		first: {
@@ -43,9 +37,6 @@ function updatePlayerPosition({x1=0, x2=0, y1=0, y2=0} = {}) {
 	game.player.position = {
 		x1, x2, y1,y2
 	}
-	/*game.player.position.x2 = x2
-	game.player.position.y1 = y1
-	game.player.position.y2 = y2*/
 	game.player.centerPoint = {
 		x: parseInt(x1) + game.player.radius,
 		y: parseInt(y1) + game.player.radius
