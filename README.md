@@ -2,18 +2,21 @@
 Create a simple scrolling platform game (like the chrome dinosaur game).
 
 ### Requirements:
+	Player is a ball (circle) ✅ 
+	Obstacles are spikes (triangles) ✅
+	Infinite scrolling ✅
+	Controls
+		Start ✅
+		Stop ✅
+		Pause
+	Points counter ✅
+	Collision detection
 
-	Infinite scrolling
-		Stop, start and pause controls
-	Points counter
-	Collision detection - from obstacles and enemies
-	Increasing speed
-	Increasing obstacles
-	Include enemies AI
 
 ### Bonus:
-
-	Do not use any image files (use css or svg)
-	Give character a weapon
-	Character can fly
+	Character can fly / booster
+	Doubel jump
 	Collectibles
+	Include flying obstacles
+	Increasing speed
+	Increasing obstacles
