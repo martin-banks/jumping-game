@@ -7,7 +7,7 @@ Two stages:
 		- calcualte obstacle X-right (exit)
 		- calculate obstacle collision point 
 		- calcualte collision point on player
-		- compoare collions and evaluate 
+		- compare collions and evaluate 
 	- if false
 		- out of collision window
 
