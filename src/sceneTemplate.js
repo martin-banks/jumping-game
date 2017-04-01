@@ -14,6 +14,7 @@ class SceneTemplate {
 		this.updateObstaclePosition = updateObstaclePosition
 		this.count = count
 		this.saveSceneData = saveSceneData
+		this.saveObstacleData = saveObstacleData
 		this.id = id
 
 		this.state = {
@@ -42,7 +43,7 @@ class SceneTemplate {
 
 	loadScene(){
 		/* render random obstacles */
-		return ''
+		return 'background'
 	}
 
 	updateObstacleCount(){
@@ -77,25 +78,33 @@ class SceneTemplate {
 				x: newIncrement
 			})
 			elem.style.transform = `translate3d(${start - (newIncrement)}%, 0, 0)`
+			
 			if(progress < duration && isPlaying()){
 				window.requestAnimationFrame(step)
 			} else if (!isPlaying()){
 				console.log('stopped')
 				return
 			} else {
+				/*reset scene and render new obstacles*/
 				console.log('restart', isPlaying())
 				elem.style.transform = `translate3d(${start}%,0,0)`
 				animStart = null
 				start = 100
 				duration = gameSpeed
 
-				let tmp = []
+				let allNewObstacles = []
+				let allNewObstacleData = []
 				for(let i=0; i< Math.ceil(Math.random()*2)+1; i++){
 					let newObstacle = new Obstacle(this.updateObstacleCount)
 					let xpos = 400/100 * (Math.ceil( (Math.random()*100 )+1))
-					tmp.push( newObstacle.template({count: this.count}) )
+					allNewObstacles.push( newObstacle.template({count: this.count}) )
+					allNewObstacleData.push({
+						x: xpos,
+						size: newObstacle.data()
+					})
 				}
-				elem.innerHTML = tmp.join('')
+				this.saveObstacleData(allNewObstacleData)
+				elem.innerHTML = allNewObstacles.join('')
 				window.requestAnimationFrame(step)
 			}
 		}	

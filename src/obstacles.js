@@ -2,31 +2,74 @@ class Obstacle {
 	constructor(updateObstacleCount){
 		this.sizes = this.sizes.bind(this)
 		this.template = this.template.bind(this)
+		this.data = this.data.bind(this)
 		this.updateObstacleCount = updateObstacleCount
+		this.calcObstacleValues = this.calcObstacleValues.bind(this)
+		this.data = this.data.bind(this)
+
+		this.state = {}
 	}
 
 	sizes(){
-		return [
-			'small', 'medium', 'large'
-		]
+		return {
+			small: {
+				className: 'small',
+				width: 60,
+				height: 40
+			},
+			medium: {
+				className: "medium",
+				width: 30,
+				height: 80
+			},
+			large: {
+				className: 'large',
+				width: 60,
+				height: 100
+			}
+		} 
+	}
+	calcObstacleValues(){
+		let sizes = Object.keys(this.sizes())
+		console.log(sizes)
+		let randomSize = sizes[ Math.ceil(Math.random() * sizes.length) -1 ]
+		console.log(randomSize)
+		let {className, width, height} = this.sizes()[randomSize]
+		this.state = {
+			className: className,
+			width: width,
+			height: height,
+			xpos: 400/100 * (Math.ceil( (Math.random()*100 )+1))
+		}
+		console.log(this.state)
+		//return this.state
 	}
 
 	template( {count=0} = {} ){
 		this.updateObstacleCount()
-		let size = this.sizes()[Math.ceil(Math.random()*this.sizes().length)-1]
-		let xpos = 400/100 * (Math.ceil( (Math.random()*100 )+1))
+		this.calcObstacleValues()
+		//let calcValues = this.calcObstacleValues()
+		let {size, xpos, className, width, height} = this.state //this.calcObstacleValues()
+		console.log('obstacle state', this.state)
 		return `
 			<div id="obs-${count}"
-				class="obstacle ${size}"
-				style="transform: translate3d(${xpos}px, 0, 0)"
+				class="obstacle ${className}"
+				style="
+					transform: translate3d(${xpos}px, 0, 0);
+				"
+				data-width=${width}
+				data-height=${height}
 			></div>
 		`
 	}
+	data(){
+		return this.state
+	}
 
-	render(){
+	/*render(){
 		let quantity = Math.ceil(Math.random()*2)+1
 
-	}
+	}*/
 
 }
 

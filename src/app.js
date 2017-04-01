@@ -8,6 +8,7 @@ const game = {
 		level: 1
 	},
 	player: {
+		shape: 'circle',
 		name: 'null',
 		avatar: 'default',
 		position: {
@@ -41,20 +42,41 @@ const game = {
 console.log('starting', game)
 
 function updatePlayerPosition({x1=0, x2=0, y1=0, y2=0} = {}) {
-	console.log('waiting to update... ', game.player.position)
+	console.log('waiting to update player... ', game.player.position)
 	game.player.position.x1 = x1
 	game.player.position.x2 = x2
 	game.player.position.y1 = y1
 	game.player.position.y2 = y2
-	console.log('updating... ', game.player.position)
+	console.log('updating player... ', game.player.position)
 }
-function updateObstaclePosition({x1=0, x2=0, y1=0, y2=0} = {}) {
-	console.log('waiting to update... ', game.player.position)
-	game.player.position.x1 = x1
-	game.player.position.x2 = x2
-	game.player.position.y1 = y1
-	game.player.position.y2 = y2
-	console.log('updating... ', game.player.position)
+/*function updateObstaclePosition({x1=0, x2=0, y1=0, y2=0} = {}) {
+	console.log('waiting to update obstacles... ', game.obstacle.position)
+	game.obstacle.position.x1 = x1
+	game.obstacle.position.x2 = x2
+	game.obstacle.position.y1 = y1
+	game.obstacle.position.y2 = y2
+	game.obstacle.shape = triangle
+	console.log('updating obstacles... ', game.obstacle.position)
+}*/
+
+
+
+function saveObstacleData(obstacles){
+	/* obstacles is an array of objects with details of rendered obstacles */
+	game.obstacles = obstacles.map(obstacle => {
+		console.log('obstacle data', obstacle)
+		let { size, shape='triangle', x, y=0 } = obstacle
+		let { width, height, className } = size
+		return {
+			shape,
+			x,
+			y,
+			width,
+			height,
+			centerAxis: width / 2,
+			className
+		}
+	})
 }
 
 function saveSceneData({scene=null, x=0, y=0}={}){
@@ -63,9 +85,19 @@ function saveSceneData({scene=null, x=0, y=0}={}){
 }
 
 
-const scene1 = new SceneTemplate({id: 'first', saveSceneData})
-const scene2 = new SceneTemplate({id: 'second', saveSceneData})
-//const scene3 = new SceneTemplate()
+
+
+/* instantiate game objects */
+const scene1 = new SceneTemplate({
+	id: 'first', 
+	saveSceneData,
+	saveObstacleData
+})
+const scene2 = new SceneTemplate({
+	id: 'second', 
+	saveSceneData,
+	saveObstacleData
+})
 const score = new Score()
 const player = new Player(updatePlayerPosition)
 const scenes = [
@@ -73,14 +105,13 @@ const scenes = [
 	scene2.render()
 ]
 
+
 document.querySelector('#app').innerHTML = [
 	score.render(),
 	`<div id="gameContainer">${scenes.join('')}</div>`,
 	`<div class="playerContainer">${player.render()}</div>`,
 	`<button id='startButton' type="button" class="btn btn-default">New Game</button>`
 ].join('')
-
-
 
 
 document.getElementById('startButton').addEventListener('click', e =>{

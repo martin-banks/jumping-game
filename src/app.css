@@ -68,14 +68,12 @@ button {
 	border-right: solid 30px rgba(0,0,0,0);
 	z-index: 3;
 }
-
 .obstacle.medium {
 	border-bottom: solid 80px #666;
 	border-left: solid 15px rgba(0,0,0,0);
 	border-right: solid 15px rgba(0,0,0,0);
 	z-index: 2;
 }
-
 .obstacle.large {
 	border-bottom: solid 100px #888;
 	border-left: solid 30px rgba(0,0,0,0);
