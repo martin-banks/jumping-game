@@ -1,6 +1,11 @@
 
 class SceneTemplate {
-	constructor({updateObstaclePosition=null, count=0} = {}) {
+	constructor({
+		id,
+		saveSceneData,
+		updateObstaclePosition = null, 
+		count = 0,
+	} = {}) {
 		this.template = this.template.bind(this)
 		this.playScene = this.playScene.bind(this)
 		this.loadScene = this.loadScene.bind(this)
@@ -8,6 +13,8 @@ class SceneTemplate {
 		this.updateObstacleCount = this.updateObstacleCount.bind(this)
 		this.updateObstaclePosition = updateObstaclePosition
 		this.count = count
+		this.saveSceneData = saveSceneData
+		this.id = id
 
 		this.state = {
 			playing: false,
@@ -27,9 +34,9 @@ class SceneTemplate {
 		console.log(this.state)
 	}
 
-	template (id){
+	template (){
 		return `
-			<div id='${id}' class="scene scene-loading">${this.loadScene()}</div>
+			<div id='${this.id}' class="scene scene-loading">${this.loadScene()}</div>
 		`
 	}
 
@@ -47,7 +54,7 @@ class SceneTemplate {
 		/* animate through to complete */
 		let isPlaying = ()=> this.state.playing
 		let animStart = null
-		let elem = document.getElementById(id)
+		let elem = document.getElementById(this.id)
 		let start = startPos
 		let {gameSpeed} = this.state
 		let duration = gameSpeed
@@ -64,8 +71,12 @@ class SceneTemplate {
 					return inc
 				}	
 			}
-
-			elem.style.transform = `translate3d(${start - (increment())}%, 0, 0)`
+			let newIncrement = increment()
+			this.saveSceneData({
+				scene: this.id,
+				x: newIncrement
+			})
+			elem.style.transform = `translate3d(${start - (newIncrement)}%, 0, 0)`
 			if(progress < duration && isPlaying()){
 				window.requestAnimationFrame(step)
 			} else if (!isPlaying()){
@@ -93,10 +104,12 @@ class SceneTemplate {
 
 
 
-	render(id){
-		return this.template(id)
+	render(){
+		return this.template(this.id)
 	}
 }
+
+
 
 /*
 if status is playing

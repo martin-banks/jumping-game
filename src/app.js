@@ -17,6 +17,16 @@ const game = {
 			y2: 0
 		}
 	},
+	scenePosition:{
+		first: {
+			x: 0,
+			y: 0
+		},
+		second: {
+			x: 0,
+			y: 0
+		}
+	},
 	obstacles: [
 		{
 			x1: 0,
@@ -47,15 +57,20 @@ function updateObstaclePosition({x1=0, x2=0, y1=0, y2=0} = {}) {
 	console.log('updating... ', game.player.position)
 }
 
+function saveSceneData({scene=null, x=0, y=0}={}){
+	game.scenePosition[scene].x = x / 100 * 500
+	game.scenePosition[scene].y = y / 100 * 300
+}
 
-const scene1 = new SceneTemplate()
-const scene2 = new SceneTemplate()
-const scene3 = new SceneTemplate()
+
+const scene1 = new SceneTemplate({id: 'first', saveSceneData})
+const scene2 = new SceneTemplate({id: 'second', saveSceneData})
+//const scene3 = new SceneTemplate()
 const score = new Score()
 const player = new Player(updatePlayerPosition)
 const scenes = [
-	scene1.render('first'),
-	scene2.render('second')
+	scene1.render(),
+	scene2.render()
 ]
 
 document.querySelector('#app').innerHTML = [
@@ -64,6 +79,7 @@ document.querySelector('#app').innerHTML = [
 	`<div class="playerContainer">${player.render()}</div>`,
 	`<button id='startButton' type="button" class="btn btn-default">New Game</button>`
 ].join('')
+
 
 
 
@@ -79,8 +95,8 @@ document.getElementById('startButton').addEventListener('click', e =>{
 	} else {
 		/* game is not running: start it */
 		game.isActive = true
-		scene1.playScene({startPos: 0, id:'first'})
-		scene2.playScene({startPos: 100, id:'second'})
+		scene1.playScene({startPos: 0 })
+		scene2.playScene({startPos: 100})
 		e.target.innerText = 'End game'
 		score.start()
 		window.addEventListener('keydown', e => {
