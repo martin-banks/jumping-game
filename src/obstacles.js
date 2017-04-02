@@ -31,26 +31,26 @@ class Obstacle {
 	}
 	calcObstacleValues(){
 		let sizes = Object.keys(this.sizes())
-		console.log(sizes)
+		//console.log(sizes)
 		let randomSize = sizes[ Math.ceil(Math.random() * sizes.length) -1 ]
-		console.log(randomSize)
+		//console.log(randomSize)
 		let {className, width, height} = this.sizes()[randomSize]
 		this.state = {
 			className: className,
 			width: width,
 			height: height,
-			xpos: 400/100 * (Math.ceil( (Math.random()*100 )+1))
+			//xpos: 400/100 * (Math.ceil( (Math.random()*100 )+1))
 		}
-		console.log(this.state)
+		//console.log(this.state)
 		//return this.state
 	}
 
-	template( {count=0} = {} ){
+	template( {count=0, xpos} = {} ){
 		this.updateObstacleCount()
 		this.calcObstacleValues()
 		//let calcValues = this.calcObstacleValues()
-		let {size, xpos, className, width, height} = this.state //this.calcObstacleValues()
-		console.log('obstacle state', this.state)
+		let {size, className, width, height} = this.state //this.calcObstacleValues()
+		//console.log('obstacle state', this.state)
 		return `
 			<div id="obs-${count}"
 				class="obstacle ${className}"

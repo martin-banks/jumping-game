@@ -40,19 +40,23 @@ class Player {
 				}
 
 				elem.style.transform = `translate3d(${x}px, ${increment}px, 0)`
-				console.log('increment', increment + 40)
+				//console.log('increment', increment + 40)
 				updatePlayerPosition({
-					x1: `${x}`,
-					x2: `${x + 40}`,
-					y1: `${increment}`,
-					y2: `${ increment + 40}`
+					x1: x,
+					x2: x + 40,
+					y1: 300 - increment,
+					y2: 300 - increment - 40
 				})
+				/*x1: x,
+			x2: x + 40,
+			y1: 300 - y,
+			y2: 300 - (y + 40)*/
 
 				if(progress < duration){
 					window.requestAnimationFrame(step)
 				} else {
 					if(direction ==='up'){
-						console.log('going down')
+						//console.log('going down')
 						animStart = null
 						start = 0-height
 						target = 0
@@ -83,10 +87,10 @@ class Player {
 	render(){
 		let {x,y} = this.startPosition()
 		this.updatePlayerPosition({
-			x1: `${x}`,
-			x2: `${x + 40}`,
-			y1: `${y}`,
-			y2: `${y + 40}`
+			x1: x,
+			x2: x + 40,
+			y1: 300 - y,
+			y2: 300 - (y + 40)
 		})
 		return `<div id="player" 
 			style="transform: translate3d(${x}px, ${y}px, 0)"

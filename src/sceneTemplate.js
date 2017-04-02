@@ -5,6 +5,7 @@ class SceneTemplate {
 		saveSceneData,
 		updateObstaclePosition = null, 
 		count = 0,
+		stopGame
 	} = {}) {
 		this.template = this.template.bind(this)
 		this.playScene = this.playScene.bind(this)
@@ -16,6 +17,7 @@ class SceneTemplate {
 		this.saveSceneData = saveSceneData
 		this.saveObstacleData = saveObstacleData
 		this.id = id
+		this.stopGame = stopGame
 
 		this.state = {
 			playing: false,
@@ -29,10 +31,11 @@ class SceneTemplate {
 		let {playing} = this.state
 		if (playing === true){
 			this.state.playing = false
+			this.stopGame()
 		} else {
 			this.state.playing = true
 		}
-		console.log(this.state)
+		//console.log(this.state)
 	}
 
 	template (){
@@ -53,7 +56,7 @@ class SceneTemplate {
 
 	playScene({id, startPos=100}={}){
 		/* animate through to complete */
-		let isPlaying = ()=> this.state.playing
+		let isPlaying = ()=> game.isActive//this.state.playing
 		let animStart = null
 		let elem = document.getElementById(this.id)
 		let start = startPos
@@ -78,6 +81,8 @@ class SceneTemplate {
 				x: newIncrement
 			})
 			elem.style.transform = `translate3d(${start - (newIncrement)}%, 0, 0)`
+			let checkCollision = new Collision(this.stopGame)
+			checkCollision.window()
 			
 			if(progress < duration && isPlaying()){
 				window.requestAnimationFrame(step)
@@ -86,7 +91,7 @@ class SceneTemplate {
 				return
 			} else {
 				/*reset scene and render new obstacles*/
-				console.log('restart', isPlaying())
+				//console.log('restart', isPlaying())
 				elem.style.transform = `translate3d(${start}%,0,0)`
 				animStart = null
 				start = 100
@@ -94,18 +99,22 @@ class SceneTemplate {
 
 				let allNewObstacles = []
 				let allNewObstacleData = []
-				for(let i=0; i< Math.ceil(Math.random()*2)+1; i++){
+				for(let i=0; i< 1/*Math.ceil(Math.random()*2)+1*/; i++){
 					let newObstacle = new Obstacle(this.updateObstacleCount)
 					let xpos = 400/100 * (Math.ceil( (Math.random()*100 )+1))
-					allNewObstacles.push( newObstacle.template({count: this.count}) )
+					allNewObstacles.push( newObstacle.template({count: this.count, xpos}) )
 					allNewObstacleData.push({
 						x: xpos,
 						size: newObstacle.data()
 					})
 				}
 				this.saveObstacleData({obstacles:allNewObstacleData, scene:this.id})
-				elem.innerHTML = allNewObstacles.join('')
+				
 				window.requestAnimationFrame(step)
+				setTimeout(()=>{
+					elem.innerHTML = allNewObstacles.join('')
+				}, 10);
+				
 			}
 		}	
 		window.requestAnimationFrame(step)

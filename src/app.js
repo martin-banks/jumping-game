@@ -33,9 +33,9 @@ const game = {
 console.log('starting', game)
 
 function updatePlayerPosition({x1=0, x2=0, y1=0, y2=0} = {}) {
-	console.log('waiting to update player... ', game.player.position)
+	//console.log('waiting to update player... ', game.player.position)
 	game.player.position = {
-		x1, x2, y1,y2
+		x1, x2, y1, y2
 	}
 	game.player.centerPoint = {
 		x: parseInt(x1) + game.player.radius,
@@ -50,9 +50,9 @@ function updatePlayerPosition({x1=0, x2=0, y1=0, y2=0} = {}) {
 
 function saveObstacleData({obstacles, scene}={}){
 	/* obstacles is an array of objects with details of rendered obstacles */
-	console.log('save args', scene, obstacles)
+	//console.log('save args', scene, obstacles)
 	game.obstacles[scene] = obstacles.map(obstacle => {
-		console.log('obstacle data', obstacle)
+		//console.log('obstacle data', obstacle)
 		let { size, shape='triangle', x, y=0 } = obstacle
 		let { width, height, className } = size
 		return {
@@ -68,8 +68,9 @@ function saveObstacleData({obstacles, scene}={}){
 }
 
 function saveSceneData({scene=null, x=0, y=0}={}){
-	game.scenePosition[scene].x = x / 100 * 500
-	game.scenePosition[scene].y = y / 100 * 300
+	//game.scenePosition[scene].x = x / 100 * 500
+	//game.scenePosition[scene].y = y / 100 * 300
+	game.scenePosition[scene].x = 500 - (x / 100 * 500)
 }
 
 
@@ -80,12 +81,14 @@ function saveSceneData({scene=null, x=0, y=0}={}){
 const scene1 = new SceneTemplate({
 	id: 'first', 
 	saveSceneData,
-	saveObstacleData
+	saveObstacleData,
+	stopGame
 })
 const scene2 = new SceneTemplate({
 	id: 'second', 
 	saveSceneData,
-	saveObstacleData
+	saveObstacleData,
+	stopGame
 })
 const score = new Score()
 const player = new Player(updatePlayerPosition)
@@ -102,15 +105,19 @@ document.querySelector('#app').innerHTML = [
 	`<button id='startButton' type="button" class="btn btn-default">New Game</button>`
 ].join('')
 
+function stopGame(){
+	score.stop()
+	game.isActive = false
+}
+
 
 document.getElementById('startButton').addEventListener('click', e =>{
 	scene1.toggleStatus()
 	scene2.toggleStatus()
 	if (game.isActive){
 		/* game is runnning: stop it */
-		game.isActive = false
-		e.target.innerText = 'New Game'
-		score.stop()
+		stopGame()
+		e.target.innerText = 'New Game'	
 		window.removeEventListener('keydown', true)
 	} else {
 		/* game is not running: start it */
@@ -120,7 +127,7 @@ document.getElementById('startButton').addEventListener('click', e =>{
 		e.target.innerText = 'End game'
 		score.start()
 		window.addEventListener('keydown', e => {
-			console.log(e.keyCode)
+			//console.log(e.keyCode)
 			if(e.keyCode === 32){
 				e.preventDefault()
 				player.jump()

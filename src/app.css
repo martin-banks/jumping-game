@@ -29,7 +29,8 @@ body {
 	box-sizing: border-box;
 	color: #888;
 	text-align: center;
-	line-height: 300px
+	line-height: 300px;
+	/*border:solid 1px gold;*/
 }
 
 .scene-loading {
