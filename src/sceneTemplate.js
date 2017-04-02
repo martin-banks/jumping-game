@@ -31,7 +31,7 @@ class SceneTemplate {
 		let {playing} = this.state
 		if (playing === true){
 			this.state.playing = false
-			this.stopGame()
+			//this.stopGame()
 		} else {
 			this.state.playing = true
 		}
@@ -46,7 +46,7 @@ class SceneTemplate {
 
 	loadScene(){
 		/* render random obstacles */
-		return 'background'
+		return ''
 	}
 
 	updateObstacleCount(){

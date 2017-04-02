@@ -62,10 +62,12 @@ class Collision {
 					if(playerCenterX > obstacleCenterAxis){
 						if(playerPointX() < obstacleIntersectRight){
 							this.stopGame()
+							return
 						}
 					} else {
 						if(playerPointX() > obstacleIntersectLeft){
 							this.stopGame()
+							return
 						}
 					}
 					

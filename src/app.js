@@ -77,7 +77,9 @@ function saveSceneData({scene=null, x=0, y=0}={}){
 
 
 
-/* instantiate game objects */
+
+
+const score = new Score()
 const scene1 = new SceneTemplate({
 	id: 'first', 
 	saveSceneData,
@@ -90,49 +92,44 @@ const scene2 = new SceneTemplate({
 	saveObstacleData,
 	stopGame
 })
-const score = new Score()
-const player = new Player(updatePlayerPosition)
-const scenes = [
-	scene1.render(),
-	scene2.render()
-]
 
-
-document.querySelector('#app').innerHTML = [
-	score.render(),
-	`<div id="gameContainer">${scenes.join('')}</div>`,
-	`<div class="playerContainer">${player.render()}</div>`,
-	`<div class="collisionContainer"></div>`,
-	`<button id='startButton' type="button" class="btn btn-default">New Game</button>`
-].join('')
+function startGame(){
+	game.isActive = true
+	/* instantiate game objects */
+	const player = new Player(updatePlayerPosition)
+	const scenes = [
+		scene1.render(),
+		scene2.render()
+	]
+	document.querySelector('#app').innerHTML = [
+		score.render(),
+		`<div id="gameContainer">${scenes.join('')}</div>`,
+		`<div class="playerContainer">${player.render()}</div>`,
+		`<div class="collisionContainer"></div>`,
+		`<div class="buttonContainer"></div>`
+		/*`<button id='startButton' type="button" class="btn btn-default">New Game</button>`*/
+	].join('')
+	scene1.toggleStatus()
+	scene2.toggleStatus()
+	
+	scene1.playScene({startPos: 0 })
+	scene2.playScene({startPos: 100})
+	score.start()
+	window.addEventListener('keydown', e => {
+		if(e.keyCode === 32){
+			e.preventDefault()
+			player.jump()
+		}
+	})
+}
 
 function stopGame(){
 	score.stop()
-	game.isActive = false
-}
-
-
-document.getElementById('startButton').addEventListener('click', e =>{
 	scene1.toggleStatus()
 	scene2.toggleStatus()
-	if (game.isActive){
-		/* game is runnning: stop it */
-		stopGame()
-		e.target.innerText = 'New Game'	
-		window.removeEventListener('keydown', true)
-	} else {
-		/* game is not running: start it */
-		game.isActive = true
-		scene1.playScene({startPos: 0 })
-		scene2.playScene({startPos: 100})
-		e.target.innerText = 'End game'
-		score.start()
-		window.addEventListener('keydown', e => {
-			//console.log(e.keyCode)
-			if(e.keyCode === 32){
-				e.preventDefault()
-				player.jump()
-			}
-		})
-	}
-})
+	game.isActive = false
+	document.querySelector('.buttonContainer').innerHTML = 'Refresh to play again'
+	//`<button type="button" class="btn btn-default" onClick="startGame()">Play again</button>`
+}
+
+startGame()

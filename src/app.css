@@ -49,9 +49,17 @@ body {
 	border: solid 2px red;
 }
 
+.buttonContainer {
+	text-align: center;
+	padding: 40px;
+	color: #ccc;
+}
+
 button {
 	position: relative;
 	margin: 40px auto;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .obstacle {
