@@ -34,9 +34,9 @@ class Player {
 				let progress = timestamp - animStart
 				let increment = null
 				if(direction === 'up'){
-					increment = y + (0-Math.min((progress/duration)*target, target))
+					increment = y + (0-Math.min(  ((progress/duration)*target) , target))
 				} else {
-					increment = y - Math.max(((1-progress/duration)*height), target)
+					increment = y - Math.max( ((1-progress/duration)*height) , target)
 				}
 
 				elem.style.transform = `translate3d(${x}px, ${increment}px, 0)`
@@ -47,11 +47,7 @@ class Player {
 					y1: 300 - increment,
 					y2: 300 - increment - 40
 				})
-				/*x1: x,
-			x2: x + 40,
-			y1: 300 - y,
-			y2: 300 - (y + 40)*/
-
+				
 				if(progress < duration && game.isActive){
 					window.requestAnimationFrame(step)
 				} else {

@@ -8,9 +8,10 @@ Create a simple scrolling platform game (like the chrome dinosaur game).
 	Controls
 		✅ Start 
 		✅ Stop 
+		[] Reset
 		[] Pause
 	✅ Points counter 
-	✅ Collision detection
+	✅ Collision detection - taking player and obstacle shape into consideration
 
 
 ### Bonus:
@@ -20,3 +21,6 @@ Create a simple scrolling platform game (like the chrome dinosaur game).
 	[] Include flying obstacles
 	[] Increasing speed
 	[] Increasing obstacles
+	[] Add easign to jump animation
+	[] Better obstacle spacing rules
+	[] High score (using local storage)

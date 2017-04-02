@@ -67,7 +67,6 @@ class SceneTemplate {
 			let progress = timestamp - animStart
 			let increment = ()=> {
 				let inc = Math.min((progress/duration*100), 100)
-				//console.log('increment', inc)
 				if (start === 100){
 					return 2 * inc
 				} else if ( start === 0 ){
@@ -91,7 +90,6 @@ class SceneTemplate {
 				return
 			} else {
 				/*reset scene and render new obstacles*/
-				//console.log('restart', isPlaying())
 				elem.style.transform = `translate3d(${start}%,0,0)`
 				animStart = null
 				start = 100
@@ -99,7 +97,7 @@ class SceneTemplate {
 
 				let allNewObstacles = []
 				let allNewObstacleData = []
-				for(let i=0; i< 1/*Math.ceil(Math.random()*2)+1*/; i++){
+				for(let i=0; i< Math.ceil(Math.random()*1)+1; i++){
 					let newObstacle = new Obstacle(this.updateObstacleCount)
 					let xpos = 400/100 * (Math.ceil( (Math.random()*100 )+1))
 					allNewObstacles.push( newObstacle.template({count: this.count, xpos}) )
@@ -108,12 +106,13 @@ class SceneTemplate {
 						size: newObstacle.data()
 					})
 				}
-				this.saveObstacleData({obstacles:allNewObstacleData, scene:this.id})
+				
 				
 				window.requestAnimationFrame(step)
 				setTimeout(()=>{
 					elem.innerHTML = allNewObstacles.join('')
-				}, 50);
+					this.saveObstacleData({obstacles:allNewObstacleData, scene:this.id})
+				}, 10);
 				
 			}
 		}	
@@ -126,14 +125,3 @@ class SceneTemplate {
 		return this.template(this.id)
 	}
 }
-
-
-
-/*
-if status is playing
-	then animate from staging through to complete
-	then reset to staging, load new content
-	animate throough to complete 
-	...
-
-*/

@@ -30,7 +30,7 @@ body {
 	color: #888;
 	text-align: center;
 	line-height: 300px;
-	border:solid 1px gold;
+	/*border:solid 1px gold;*/
 }
 
 .scene-loading {
@@ -118,8 +118,8 @@ button {
 }
 
 .obstacleCollide {
-	background-color: cyan
+	/*background-color: cyan*/
 }
 .playerCollide {
-	background-color: lime
+	/*background-color: lime*/
 }

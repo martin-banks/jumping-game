@@ -49,7 +49,6 @@ class Collision {
 						
 					}
 					let playerPointY = ()=> {
-						console.log(playerCenterY, obstacle.height)
 						if(playerCenterY > obstacle.height){
 							return 300 - player.position.y2
 						} else {
