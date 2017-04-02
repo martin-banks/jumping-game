@@ -39,7 +39,7 @@ function updatePlayerPosition({x1=0, x2=0, y1=0, y2=0} = {}) {
 	}
 	game.player.centerPoint = {
 		x: parseInt(x1) + game.player.radius,
-		y: parseInt(y1) + game.player.radius
+		y: parseInt(y2) + game.player.radius
 	}
 	
 	//console.info('centerpoint', game.player.centerPoint)
@@ -102,6 +102,7 @@ document.querySelector('#app').innerHTML = [
 	score.render(),
 	`<div id="gameContainer">${scenes.join('')}</div>`,
 	`<div class="playerContainer">${player.render()}</div>`,
+	`<div class="collisionContainer"></div>`,
 	`<button id='startButton' type="button" class="btn btn-default">New Game</button>`
 ].join('')
 

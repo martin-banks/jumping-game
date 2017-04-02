@@ -52,10 +52,10 @@ class Player {
 			y1: 300 - y,
 			y2: 300 - (y + 40)*/
 
-				if(progress < duration){
+				if(progress < duration && game.isActive){
 					window.requestAnimationFrame(step)
 				} else {
-					if(direction ==='up'){
+					if(direction ==='up' && game.isActive){
 						//console.log('going down')
 						animStart = null
 						start = 0-height

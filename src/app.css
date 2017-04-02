@@ -30,7 +30,7 @@ body {
 	color: #888;
 	text-align: center;
 	line-height: 300px;
-	/*border:solid 1px gold;*/
+	border:solid 1px gold;
 }
 
 .scene-loading {
@@ -99,4 +99,27 @@ button {
 	left: 0;
 	top`: 0;
 
+}
+
+.collisionContainer {
+	position: relative;
+	width: 500px;
+	height: 300px;
+	margin: 0 auto;
+	background-color: rgba(0,0,0,0.2);
+	/*z-index: -1*/
+}
+
+.collisionContainer div {
+	position: absolute;
+	width: 4px;
+	height: 4px;
+	
+}
+
+.obstacleCollide {
+	background-color: cyan
+}
+.playerCollide {
+	background-color: lime
 }

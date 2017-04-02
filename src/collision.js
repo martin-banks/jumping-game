@@ -16,22 +16,63 @@ class Collision {
 			
 			for (const obstacle of obstacles[scene]) {
 				/*console.log('obstacle', obstacle)*/
-				let horizontal = ()=> {
-					/*console.log(scene, obstacle, '\n',
-						player.position.x2, obstacle.x, game.scenePosition[scene].x ,
-						'\n', player.position.x1, obstacle.x + obstacle.width + game.scenePosition[scene].x)*/
-					if( (player.position.x2 > (obstacle.x + game.scenePosition[scene].x)) && (player.position.x1 < (obstacle.x + obstacle.width + game.scenePosition[scene].x)) ){
+				let playerRightEdge = player.position.x2
+				let playerLeftEdge = player.position.x1
+				let obstacleLeftEdge = obstacle.x + game.scenePosition[scene].x
+				let obstacleRightEdge = obstacle.x + obstacle.width + game.scenePosition[scene].x
+				let obstacleCenterAxis = obstacleLeftEdge + (obstacle.width / 2)
+				let playerCenterX = playerLeftEdge + player.radius
+				let playerCenterY = player.position.y2 + player.radius
+				const inHorizontal = ()=> {
+					if( (playerRightEdge > obstacleLeftEdge) && (playerLeftEdge < obstacleRightEdge) ) {
 						return true
 					} else {
 						return false
 					}	
 				}
-				let vertical = ()=> player.position.y2 < obstacle.height ? true : false
-				//console.log(horizontal, vertical)
-				if( horizontal() && vertical() ){
-					this.stopGame()
-					//return true
+				const inVertical = ()=> player.position.y2 < obstacle.height ? true : false
+				
+				if( inHorizontal() && inVertical() ){
+					/* in colision window */
+					let obstacleCollisionFromAxis = (obstacle.width / 2) - ((playerCenterY + player.position.y2) / 2)
+					let pcY = (playerCenterY/obstacle.height) * playerCenterY
+					let leftoffset = ((obstacle.width/2) / obstacle.height) * playerCenterY
+					let obstacleIntersectLeft = obstacleLeftEdge + ( leftoffset )
+					let obstacleIntersectRight = obstacleRightEdge - ( leftoffset )
+
+					let playerPointX = ()=> {
+						if(playerCenterX > obstacleCenterAxis){
+							return playerCenterX - (player.radius)
+						} else {
+							return playerCenterX + (player.radius)
+						}
+						
+					}
+					let playerPointY = ()=> {
+						console.log(playerCenterY, obstacle.height)
+						if(playerCenterY > obstacle.height){
+							return 300 - player.position.y2
+						} else {
+							return 300 - playerCenterY	
+						}	
+					}
+					document.querySelector('.collisionContainer').innerHTML = `
+						<div class="obstacleCollide" style="left: ${playerCenterX < obstacleCenterAxis ? obstacleIntersectLeft: obstacleIntersectRight}px; top: ${300 - playerCenterY}px;"></div>
+						<div class="playerCollide" style="left: ${playerPointX()}px; top: ${playerPointY()}px;"></div>
+					`
+					if(playerCenterX > obstacleCenterAxis){
+						if(playerPointX() < obstacleIntersectRight){
+							this.stopGame()
+						}
+					} else {
+						if(playerPointX() > obstacleIntersectLeft){
+							this.stopGame()
+						}
+					}
+					
+				
 				} else {
+					/* outside of collision window */
 					document.querySelector('#app').style.backgroundColor = ''
 					//return false
 				}

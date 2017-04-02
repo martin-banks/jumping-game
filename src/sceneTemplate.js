@@ -113,7 +113,7 @@ class SceneTemplate {
 				window.requestAnimationFrame(step)
 				setTimeout(()=>{
 					elem.innerHTML = allNewObstacles.join('')
-				}, 10);
+				}, 50);
 				
 			}
 		}	
